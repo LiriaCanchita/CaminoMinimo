@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmo de Dijkstra - Camino Mínimo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Problema del Camino Mínimo (Algoritmo de Dijkstra)</h1>
+    </header>
+
+    <div class="contenedor-principal">
+        <div class="tarjeta">
+            <h2>1. Configuración del Grafo</h2>
+            <div class="grupo-formulario">
+                <label for="numeroNodos">Cantidad de Nodos n (entero de 7 a 16):</label>
+                <input type="number" id="numeroNodos" min="7" max="16" step="1" value="8">
+            </div>
+            <div class="grupo-formulario">
+                <label for="tipoGeneracion">Método de Generación:</label>
+                <select id="tipoGeneracion" onchange="alternarModoGeneracion()">
+                    <option value="aleatorio">Aleatorio</option>
+                    <option value="manual">Manual</option>
+                </select>
+            </div>
+            <button onclick="inicializarGrafo()">Generar / Reiniciar Grafo</button>
+
+            <div id="panelManual" class="panel-manual" style="display: none;">
+                <hr class="divisor">
+                <h2>Agregar Arista Manual</h2>
+                <div class="grupo-formulario">
+                    <label for="aristaOrigen">Vértice Origen:</label>
+                    <select id="aristaOrigen"></select>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="aristaDestino">Vértice Destino:</label>
+                    <select id="aristaDestino"></select>
+                </div>
+                <div class="grupo-formulario">
+                    <label for="aristaPeso">Peso de la Arista:</label>
+                    <input type="number" id="aristaPeso" min="1" step="1" value="5">
+                </div>
+                <button class="boton-secundario" onclick="agregarAristaManual()">+ Agregar Arista</button>
+                <label>Aristas definidas:</label>
+                <div id="listaAristas" class="lista-aristas"></div>
+                <button class="boton-secundario" onclick="limpiarAristas()">Limpiar todas las aristas</button>
+            </div>
+
+            <hr class="divisor">
+            <h2>2. Selección de Ruta</h2>
+            <div class="grupo-formulario">
+                <label for="nodoInicio">Vértice Origen:</label>
+                <select id="nodoInicio"></select>
+            </div>
+            <div class="grupo-formulario">
+                <label for="nodoFin">Vértice Destino:</label>
+                <select id="nodoFin"></select>
+            </div>
+            <button class="boton-exito" onclick="iniciarDijkstra()">Ejecutar Dijkstra</button>
+
+            <div id="panelControl" class="panel-control">
+                <hr class="divisor">
+                <h2>3. Pasos de la Ejecución</h2>
+                <div class="grupo-botones">
+                    <button class="boton-secundario" onclick="pasoAnterior()">Anterior</button>
+                    <button onclick="pasoSiguiente()">Siguiente Paso</button>
+                </div>
+                <div class="grupo-botones">
+                    <button class="boton-secundario" onclick="reiniciarEjecucion()">Reiniciar</button>
+                    <button class="boton-secundario" onclick="irAlFinal()">Ir al final</button>
+                </div>
+                <div class="info-paso" id="descripcionPaso">
+                    Haz clic en "Siguiente Paso" para avanzar en el recorrido.
+                </div>
+            </div>
+        </div>
+
+        <div class="tarjeta tarjeta-visor">
+            <div class="contenedor-lienzo">
+                <canvas id="lienzoGrafo"></canvas>
+            </div>
+            <div class="pie-visor">
+                <h3 class="titulo-pie">Tabla de Distancias y Rutas Encontradas</h3>
+                <div id="contenedorTabla" class="contenedor-tabla">
+                    <p class="texto-atenuado">Genera el grafo e inicia el algoritmo para ver las etiquetas.</p>
+                </div>
+                <div id="resultadosResumen" class="resultados-resumen"></div>
+                <div class="leyenda">
+                    <div class="item-leyenda"><div class="color-leyenda nodo-no-visitado"></div> No visitado</div>
+                    <div class="item-leyenda"><div class="color-leyenda nodo-activo"></div> Nodo en análisis</div>
+                    <div class="item-leyenda"><div class="color-leyenda nodo-visitado"></div> Definitivo (Visitado)</div>
+                    <div class="item-leyenda"><div class="color-leyenda nodo-camino"></div> Camino(s) Mínimo(s)</div>
+                    <div class="item-leyenda">[d | pred] = etiqueta del vértice</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
